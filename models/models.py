@@ -40,6 +40,27 @@ class articleManager(models.Model):
     state = fields.Selection([('open', 'Open'), ('reading', 'Reading'), ('read', 'Read'), ('abandon', 'Abandoned')],
                              default="open", tracking=True, copy=False, readonly=False)
 
+
+
+    def write(self, vals):
+        if 'state' in vals and vals['state'] == 'reading':
+            vals['start_date'] = fields.Date.today()
+
+        elif 'state' in vals and vals['state'] == 'read':
+
+            # send email to author here and update fields
+            email_author = self.author
+            email_values = {'book_title': self.title, 'book_reader_name': self.assigned_to.name, 'read_date': self.finished_date}
+
+            # mail template details
+            template_id = self.env.ref('article_manager.mail_template_read_article_notify').id
+            template = self.env['mail.template'].browse(template_id)
+            template.with_context(email_values).sudo().send_mail(email_author.id, force_send=True)
+            vals['finished_date'] = fields.Date.today()
+
+        res = super().write(vals)
+        return res
+
     @api.model
     def get_modified_data(self):
 
@@ -73,15 +94,6 @@ class articleManager(models.Model):
     	self.write({'start_date': today})
 
     def action_move_to_read(self):
-
-    	# send email to author here and update fields
-        email_author = self.author
-        email_values = {'book_title': self.title, 'book_reader_name': self.assigned_to.name, 'read_date': self.finished_date}
-
-        # mail template details
-        template_id = self.env.ref('article_manager.mail_template_read_article_notify').id
-        template = self.env['mail.template'].browse(template_id)
-        template.with_context(email_values).send_mail(email_author.id, force_send=True)
         self.write({'state': 'read'})
         today = fields.Date.today()
         self.write({'finished_date': today})

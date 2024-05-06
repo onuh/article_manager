@@ -23,7 +23,6 @@
                                                 <td valign="middle">
                                                     <h2><span>Completion of Article titled "<t t-out="ctx['book_title']" />"</span></h2>
                                                     <br/>
-                                                    <!--  -->
                                                 </td>
                                                 <td valign="middle" align="right">
                                                     <img t-attf-src="/logo.png?company={{object.company_id.id}}"
