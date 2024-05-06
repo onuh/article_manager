@@ -1,0 +1,133 @@
+<odoo>
+    <record id="view_article_article_filter" model="ir.ui.view">
+        <field name="name">article.article.filter</field>
+        <field name="model">article.article</field>
+        <field name="arch" type="xml">
+            <search string="Filter Article">
+                <field name="author" filter_domain="[('author', 'ilike', self)]"/>
+                <field name="title" filter_domain="[('title', 'ilike', self)]"/>
+                <field name="assigned_to" filter_domain="[('assigned_to', 'ilike', self)]"/>
+                <field name="state" filter_domain="[('state', 'ilike', self)]"/>
+                <field name="deadline" filter_domain="[('deadline', 'ilike', self)]"/>
+                <field name="publish_date" filter_domain="[('publish_date', 'ilike', self)]"/>
+                <filter string="Author" name="author" domain="[('author', '!=', False)]"/>
+                <filter string="Title" name="title" domain="[('title', '!=', False)]"/>
+                <filter string="Assigned To" name="assigned_to" domain="[('assigned_to', '!=', False)]"/>
+                <filter string="State" name="state" domain="[('state', '!=', False)]"/>
+                <filter string="Deadline" name="deadline" domain="[('deadline', '!=', False)]"/>
+                <filter string="Publish Date" name="publish_date" domain="[('publish_date', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Author" name="author" domain="[]" context="{'group_by': 'author'}"/>
+                    <filter name="assigned_to" string="Assigned To" domain="[]" context="{'group_by': 'assigned_to'}"/>
+                    <filter string="Publish Date" name="publish_date" domain="[]" context="{'group_by': 'publish_date'}"/>
+                    <filter string="Deadline" name="deadline" domain="[]" context="{'group_by': 'deadline'}"/>
+                    <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_article_article_tree" model="ir.ui.view">
+        <field name="name">article.article.tree</field>
+        <field name="model">article.article</field>
+        <field name="arch" type="xml">
+            <tree js_class="article_manage_tree">
+                <field name="author"/>
+                <field name="title" />
+                <field name="publish_date"/>
+                <field name="deadline"/>
+                <field name="assigned_to"/>
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_article_article_form">
+        <field name="name">article.article.form</field>
+        <field name="model">article.article</field>
+        <field name="arch" type="xml">
+            <form >
+                <header>
+                    <button name="action_move_to_reading" states="open" groups="article_manager.group_article_reader" string="Reading" class="oe_highlight" type="object" data-hotkey="v"/>
+                    <button name="action_move_to_read" states="reading" groups="article_manager.group_article_reader" string="Read" class="oe_highlight" type="object" data-hotkey="v"/>
+                    <button name="action_move_to_abandon" states="open,reading" groups="article_manager.group_article_reader" string="Abandon" type="object" data-hotkey="y"/>
+                    <field name="state" widget="statusbar" readonly="1" />
+                    <field name="is_article_manager" invisible="1"/>
+                    <field name="is_article_reader" invisible="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="author" options="{'no_create': True}" required="1" readonly="1" force_save="1" />
+                            <field name="assigned_to" required="1" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                            <field name="publish_date" required="1" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                            <field name="start_date" readonly="1" force_save="1"/>
+                            <field name="content" required="1" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                        </group>
+                        <group>
+                            <field name="title" required="1" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                            <field name="deadline" required="1" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                            <field name="finished_date" readonly="1" force_save="1" />
+                            <field name="image" widget="image" attrs="{'readonly':['|', ('is_article_reader' , '=', True), ('state' , 'in', ['read', 'abandon'])]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_article_article_kanban" model="ir.ui.view">
+        <field name="name">article.article.kanban</field>
+        <field name="model">article.article</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_mobile" sample="1" quick_create="false">
+                <field name="name"/>
+                <field name="assigned_to"/>
+                <field name="start_date"/>
+                <field name="state"/>
+                <progressbar field="state" colors='{"open": "secondary", "reading": "primary", "read": "success", "abandon": "danger"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb16">
+                                <div class="o_kanban_record_headings mt4">
+                                    <strong class="o_kanban_record_title">
+                                        <span t-out="record.name.value"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left text-muted">
+                                    <span>
+                                        <t t-out="record.assigned_to.value"/> <t t-out="record.start_date.value"/>
+                                    </span>
+                                    <field name="activity_ids" widget="kanban_activity"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="state" widget="label_selection"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+<record id="action_article_article_server" model="ir.actions.server">
+    <field name="name">Articles</field>
+    <field name="model_id" ref="article_manager.model_article_article"/>
+    <field name="state">code</field>
+    <field name="code">
+        action = model.get_modified_data()
+    </field>
+</record>
+
+    <menuitem id="menu_articles" name="Articles" web_icon="article_manager,static/description/icon.svg" action="article_manager.action_article_article_server" />
+    <menuitem id="partner_menu_articles" name="Articles" action="action_article_article_server" parent="contacts.menu_contacts" sequence="10"/>
+
+</odoo>
