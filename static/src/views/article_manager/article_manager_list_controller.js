@@ -15,6 +15,7 @@ export class ArticleManagerControllerList extends ListController {
             const env = useEnv();
          onWillStart(async () => {
             //console.log(this.getRecords())
+            
         
         });
         
