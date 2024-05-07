@@ -31,7 +31,7 @@
         'report/article_manager_report.xml',
         'views/report_template.xml',
         'views/mail_template.xml',
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
 
     'assets': {
@@ -41,7 +41,7 @@
     },
     # only loaded in demonstration mode
     'demo': [
-        # 'demo/demo.xml',
+        'demo/demo.xml',
     ],
     'installable': True,
     'application': True,
