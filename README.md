@@ -17,7 +17,7 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `deadline`
    - `assigned_to`
    - `content`
-   On successful creation, the API will respond with the `create_id` which is id of the created record in model `article.article`.
+   - On successful creation, the API will respond with the `create_id` which is id of the created record in model `article.article`.
 
    # Fetch API
    The Fetch API will pull all records available in `article.article` model. Records retrieved will be based on user's group and security policy. The API endpoint is `/api/article_manager/fetch`. A success fetch will give the below field values for each record in the database.
@@ -32,7 +32,7 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `state`
    - `content`
    - `image`
-   Note: `image` is a base64 encoded string.
+   - Note: `image` is a base64 encoded string.
 
    # Update API
    The update API endpoint is `/api/article_manager/update/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to update including parameters fields to the endpoint. The author field cannot be updated, so sending an `author` id is inconsequential. The update api once succeeded will respond with a success json.
