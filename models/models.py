@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
 
 
 class articleManager(models.Model):
@@ -61,12 +59,8 @@ class articleManager(models.Model):
         res = super().write(vals)
         return res
 
-    @api.model
-    def get_modified_data(self):
-
-        context = dict(self.env.context or {})
+    def get_allowed_ids(self):
         allowed_view_ids = []
-
         # load ids based on logged in user
         logged_in_user = self.env.user
         if logged_in_user.has_group('article_manager.group_article_manager'):
@@ -78,6 +72,14 @@ class articleManager(models.Model):
             related_partner = self.env.user.partner_id.id
             allowed_view_ids = self.env['article.article'].search([('assigned_to', '=', related_partner)]).ids
 
+        return allowed_view_ids
+
+    @api.model
+    def get_modified_data(self):
+
+        context = dict(self.env.context or {})
+        allowed_view_ids = self.get_allowed_ids()
+
         return {
             'name': _('Articles'),
             'type': 'ir.actions.act_window',
@@ -86,6 +88,13 @@ class articleManager(models.Model):
             'domain': [('id', 'in', allowed_view_ids)],
             'res_model': 'article.article',
         }
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+        allowed_view_ids = self.get_allowed_ids()
+        domain = [['id', 'in', allowed_view_ids]]
+        return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
+    
 
 
     def action_move_to_reading(self):
@@ -107,37 +116,3 @@ class articleManager(models.Model):
         for vals in vals_list:
             vals['name'] = vals['title']
         return super().create(vals_list)
-
-class articleManagerReport(models.AbstractModel):
-
-    # report model
-    _name = 'report.article_manager.report_article'
-    _description = 'Article Manager Report'
-
-    # api to pass data from model to report template
-    @api.model
-    def _get_report_values(self, docids, data=None):
-        model = 'article.article'
-        docs = self.env[model].browse(self.env.context.get('active_ids', docids))
-
-        # filter out only report with read state
-        docs = docs.filtered(lambda r: r.state == 'read')
-        if not docs:
-            raise ValidationError(_('Report(s) not in read state.'))
-
-        return {
-            'doc_ids': docids,
-            'doc_model': model,
-            'data': data,
-            'docs': docs,
-        }
-
-class resPartner(models.Model):
-    # inherit this model as we used in email template
-    _inherit = 'res.partner'
-
-    # @api.model
-    # def name_get(self):
-    #     res = super().name_get()
-    #     print("RES: ", res)
-    #     return res

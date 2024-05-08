@@ -29,16 +29,10 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'report/article_manager_report.xml',
-        'views/report_template.xml',
-        'views/mail_template.xml',
-        # 'demo/demo.xml',
+        'report/report_template.xml',
+        'data/mail_template.xml',
     ],
 
-    'assets': {
-        'web.assets_backend': [
-            'article_manager/static/src/views/**/*',
-        ],
-    },
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
