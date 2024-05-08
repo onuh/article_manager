@@ -91,8 +91,6 @@ class articleManager(models.Model):
 
     @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        allowed_view_ids = self.get_allowed_ids()
-        domain = [['id', 'in', allowed_view_ids]]
         return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
     
 

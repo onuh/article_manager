@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from . import models
+from . import article_article
 from . import res_partner
