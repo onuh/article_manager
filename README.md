@@ -19,7 +19,7 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `content`
    - On successful creation, the API will respond with the `create_id` which is id of the created record in model `article.article`.
    - Sample API response for managers
-   - ```
+   ```
          {
           "jsonrpc": "2.0",
           "id": null,
@@ -49,55 +49,55 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `image`
    - Note: `image` is a base64 encoded string.
    - Sample Fetch API response for an article reader
-   - ```{
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "success",
-        "response": [
-            {
-                "id": 12,
-                "title": "The Value of Tech in Asia Minor",
-                "author": "Mitchell Admin",
-                "assigned_to": "Onuh Victor",
-                "publish_date": "2024-05-01",
-                "deadline": "2024-05-25",
-                "start_date": false,
-                "finished_date": "2024-05-08",
-                "state": "read",
-                "content": "The Value of Tech in Asia Minor",
-                "image": false
-            },
-            {
-                "id": 13,
-                "title": "Why Arsenal Cannot Win EPL after 30 Years",
-                "author": "Mitchell Admin",
-                "assigned_to": "Onuh Victor",
-                "publish_date": "2024-04-15",
-                "deadline": "2024-05-10",
-                "start_date": "2024-05-09",
-                "finished_date": "2024-05-09",
-                "state": "read",
-                "content": "Why Arsenal Cannot Win EPL after 30 Years",
-                "image": false
-            },
-            {
-                "id": 15,
-                "title": "Another Article",
-                "author": "Mitchell Admin",
-                "assigned_to": "Onuh Victor",
-                "publish_date": "2024-05-09",
-                "deadline": "2024-05-31",
-                "start_date": false,
-                "finished_date": false,
-                "state": "open",
-                "content": "Another Test Article",
-                "image": false
-            }
-        ]
-    }
-}
-```
+      ```{
+       "jsonrpc": "2.0",
+       "id": null,
+       "result": {
+           "status": "success",
+           "response": [
+               {
+                   "id": 12,
+                   "title": "The Value of Tech in Asia Minor",
+                   "author": "Mitchell Admin",
+                   "assigned_to": "Onuh Victor",
+                   "publish_date": "2024-05-01",
+                   "deadline": "2024-05-25",
+                   "start_date": false,
+                   "finished_date": "2024-05-08",
+                   "state": "read",
+                   "content": "The Value of Tech in Asia Minor",
+                   "image": false
+               },
+               {
+                   "id": 13,
+                   "title": "Why Arsenal Cannot Win EPL after 30 Years",
+                   "author": "Mitchell Admin",
+                   "assigned_to": "Onuh Victor",
+                   "publish_date": "2024-04-15",
+                   "deadline": "2024-05-10",
+                   "start_date": "2024-05-09",
+                   "finished_date": "2024-05-09",
+                   "state": "read",
+                   "content": "Why Arsenal Cannot Win EPL after 30 Years",
+                   "image": false
+               },
+               {
+                   "id": 15,
+                   "title": "Another Article",
+                   "author": "Mitchell Admin",
+                   "assigned_to": "Onuh Victor",
+                   "publish_date": "2024-05-09",
+                   "deadline": "2024-05-31",
+                   "start_date": false,
+                   "finished_date": false,
+                   "state": "open",
+                   "content": "Another Test Article",
+                   "image": false
+               }
+           ]
+       }
+   }
+   ```
 
    # Update API
    The update API endpoint is `/api/article_manager/update/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to update including parameters fields to the endpoint. The author field cannot be updated, so sending an `author` id is inconsequential. The update api once succeeded will respond with a success json.
@@ -110,13 +110,13 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
                  "response": "You cannot update more than the state of an article, kindly send only 'state' param"
              }
          }
-               
+
       ```
 
    # Delete API
    The delete API endpoint is `/api/article_manager/delete/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to delete. Only Authenticated Article Managers will receive a success response upon consumation of the endpoint.
       - Sample API response for reader
-      - ```
+      ```
       {
           "jsonrpc": "2.0",
           "id": null,
