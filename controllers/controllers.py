@@ -37,7 +37,9 @@ class ArticleManager(http.Controller):
     def delete_record(self, rec_id):
         try:
             rec_id = int(rec_id)
-            model = request.env['article.article'].sudo().browse(rec_id)
+            model = request.env['article.article'].sudo().search([('id', '=', rec_id)])
+            if request.env.user.has_group('article_manager.group_article_reader'):
+                return self.error_response("You are not authorised to delete record or record does not exist")
             response = []
             if not model:
                 return self.error_response("Record does not exist")
