@@ -49,54 +49,55 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `image`
    - Note: `image` is a base64 encoded string.
    - Sample Fetch API response for an article reader
-      ```{
-       "jsonrpc": "2.0",
-       "id": null,
-       "result": {
-           "status": "success",
-           "response": [
-               {
-                   "id": 12,
-                   "title": "The Value of Tech in Asia Minor",
-                   "author": "Mitchell Admin",
-                   "assigned_to": "Onuh Victor",
-                   "publish_date": "2024-05-01",
-                   "deadline": "2024-05-25",
-                   "start_date": false,
-                   "finished_date": "2024-05-08",
-                   "state": "read",
-                   "content": "The Value of Tech in Asia Minor",
-                   "image": false
-               },
-               {
-                   "id": 13,
-                   "title": "Why Arsenal Cannot Win EPL after 30 Years",
-                   "author": "Mitchell Admin",
-                   "assigned_to": "Onuh Victor",
-                   "publish_date": "2024-04-15",
-                   "deadline": "2024-05-10",
-                   "start_date": "2024-05-09",
-                   "finished_date": "2024-05-09",
-                   "state": "read",
-                   "content": "Why Arsenal Cannot Win EPL after 30 Years",
-                   "image": false
-               },
-               {
-                   "id": 15,
-                   "title": "Another Article",
-                   "author": "Mitchell Admin",
-                   "assigned_to": "Onuh Victor",
-                   "publish_date": "2024-05-09",
-                   "deadline": "2024-05-31",
-                   "start_date": false,
-                   "finished_date": false,
-                   "state": "open",
-                   "content": "Another Test Article",
-                   "image": false
-               }
-           ]
-       }
-   }
+      ```
+         {
+          "jsonrpc": "2.0",
+          "id": null,
+          "result": {
+              "status": "success",
+              "response": [
+                  {
+                      "id": 12,
+                      "title": "The Value of Tech in Asia Minor",
+                      "author": "Mitchell Admin",
+                      "assigned_to": "Onuh Victor",
+                      "publish_date": "2024-05-01",
+                      "deadline": "2024-05-25",
+                      "start_date": false,
+                      "finished_date": "2024-05-08",
+                      "state": "read",
+                      "content": "The Value of Tech in Asia Minor",
+                      "image": false
+                  },
+                  {
+                      "id": 13,
+                      "title": "Why Arsenal Cannot Win EPL after 30 Years",
+                      "author": "Mitchell Admin",
+                      "assigned_to": "Onuh Victor",
+                      "publish_date": "2024-04-15",
+                      "deadline": "2024-05-10",
+                      "start_date": "2024-05-09",
+                      "finished_date": "2024-05-09",
+                      "state": "read",
+                      "content": "Why Arsenal Cannot Win EPL after 30 Years",
+                      "image": false
+                  },
+                  {
+                      "id": 15,
+                      "title": "Another Article",
+                      "author": "Mitchell Admin",
+                      "assigned_to": "Onuh Victor",
+                      "publish_date": "2024-05-09",
+                      "deadline": "2024-05-31",
+                      "start_date": false,
+                      "finished_date": false,
+                      "state": "open",
+                      "content": "Another Test Article",
+                      "image": false
+                  }
+              ]
+          }
+      }
    ```
 
    # Update API
