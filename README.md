@@ -8,7 +8,7 @@ Odoo Article Management module allows managers to create articles and assign it 
 The module has two security groups, `group_article_manager` and `group_article_reader`. Both security groups inherits from `base.group_user`. The security groups are in [security.xml](security/security.xml) file with access rights in [ir.model.access.csv](security/ir.model.access.csv) file.
 
 # API Endpoints
-The module has 4 API endpoints. Users must be authenticated using Odoo standand auth URL `/web/session/authenticate` and receieve a `session_id` to be used in subsequent request headers to consume the API. The API accept a json object in format `{"jsonrpc":"2.0","params":{"db":"odooxyzdb","login":"xyz","password":"******"}}` for authentication. After authentication, the `params` key should hold field keys and values. The API endpoints are given below:
+The module has 4 API endpoints. Users must be authenticated using Odoo standand auth URL `/web/session/authenticate` and receieve a `session_id` to be used in subsequent request headers to consume the API. The API accept a json object in format `{"jsonrpc":"2.0","params":{"db":"odooxyzdb","login":"xyz","password":"******"}}` for authentication. After authentication, the `params` key should hold field keys and values. The API status is either an `error` or a `success`. An `error` status always have a `string` as response while a success response always have `an array of json object` as response. Please always check the result status whenever you consume the API to know your expected response. The API endpoints are given below:
 
    # Create API
    The create API endpoint is `/api/article_manager/create`. Article Managers can post the following Mandatory fields during article creation:
