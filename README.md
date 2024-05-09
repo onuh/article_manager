@@ -49,8 +49,8 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
    - `image`
    - Note: `image` is a base64 encoded string.
    - Sample Fetch API response for an article reader
-      ```
-         {
+   ```
+      {
           "jsonrpc": "2.0",
           "id": null,
           "result": {
