@@ -100,33 +100,33 @@ The module has 4 API endpoints. Users must be authenticated using Odoo standand 
       }
    ```
 
-   # Update API
-   The update API endpoint is `/api/article_manager/update/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to update including parameters fields to the endpoint. The author field cannot be updated, so sending an `author` id is inconsequential. The update api once succeeded will respond with a success json.
-      - Sample API response for Update request by a reader
-      ```{
-             "jsonrpc": "2.0",
-             "id": null,
-             "result": {
-                 "status": "error",
-                 "response": "You cannot update more than the state of an article, kindly send only 'state' param"
-             }
-         }
-
-      ```
-
-   # Delete API
-   The delete API endpoint is `/api/article_manager/delete/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to delete. Only Authenticated Article Managers will receive a success response upon consumation of the endpoint.
-      - Sample API response for reader
-      ```
-      {
+# Update API
+The update API endpoint is `/api/article_manager/update/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to update including parameters fields to the endpoint. The author field cannot be updated, so sending an `author` id is inconsequential. The update api once succeeded will respond with a success json.
+   - Sample API response for Update request by a reader
+   ```{
           "jsonrpc": "2.0",
           "id": null,
           "result": {
               "status": "error",
-              "response": "You are not authorised to delete record or record does not exist"
+              "response": "You cannot update more than the state of an article, kindly send only 'state' param"
           }
       }
-      ```
+
+   ```
+
+# Delete API
+The delete API endpoint is `/api/article_manager/delete/<int:rec_id>`. Users must supply the id which is `rec_id` of the record to delete. Only Authenticated Article Managers will receive a success response upon consumation of the endpoint.
+   - Sample API response for reader
+   ```
+   {
+       "jsonrpc": "2.0",
+       "id": null,
+       "result": {
+           "status": "error",
+           "response": "You are not authorised to delete record or record does not exist"
+       }
+   }
+   ```
 
 # Usage of Module
 After installation of module, users must either be assigned to either a `group_article_manager` or a `group_article_reader` to have access to the module icon on their main home dashboard.
